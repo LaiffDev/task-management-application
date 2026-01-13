@@ -1,0 +1,7 @@
+{
+  "routes": {
+    "/task-management-application": {},
+    "/task-management-application/backlogs": {},
+    "/task-management-application/dashboard": {}
+  }
+}

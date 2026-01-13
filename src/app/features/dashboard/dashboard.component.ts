@@ -81,8 +81,10 @@ export class DashboardComponent {
   }
 
   getAllTasks() {
-    this.allTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-    this.dataSource.data = this.allTasks;
+    if (typeof localStorage !== 'undefined') {
+      this.allTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+      this.dataSource.data = this.allTasks;
+    }
   }
 
   //open dialog to add tasks
