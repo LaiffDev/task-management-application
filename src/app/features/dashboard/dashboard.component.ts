@@ -83,8 +83,9 @@ export class DashboardComponent {
   getAllTasks() {
     if (typeof localStorage !== 'undefined') {
       this.allTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-      this.dataSource.data = this.allTasks;
     }
+
+    this.dataSource.data = this.allTasks;
   }
 
   //open dialog to add tasks
@@ -95,6 +96,9 @@ export class DashboardComponent {
     dialogRef.afterClosed().subscribe((result) => {
       this.savedTasks.push(result);
       this.taskService.AddNewTask(this.savedTasks);
+
+      //recalling the function when a task is added
+      this.getAllTasks();
     });
   }
 

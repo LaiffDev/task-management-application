@@ -5,10 +5,11 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:cloud": "ng build --configuration production --base-href /task-management-application/",
+    "build:cloud": "ng build --configuration production --base-href /task-management-application/ && cp dist/task-management-app/browser/index.csr.html dist/task-management-app/browser/index.html && cp dist/task-management-app/browser/index.html dist/task-management-app/browser/404.html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:task-management-app": "node dist/task-management-app/server/server.mjs"
+    "serve:ssr:task-management-app": "node dist/task-management-app/server/server.mjs",
+    "deploy": "npx angular-cli-ghpages --dir=dist/task-management-app/browser"
   },
   "private": true,
   "dependencies": {
