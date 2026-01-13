@@ -12,6 +12,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { TaskData } from '../models/task-data';
 
 @Component({
   selector: 'app-add-task',
@@ -41,9 +42,6 @@ export class AddTaskComponent {
   });
 
   constructor(private dialogRef: MatDialogRef<AddTaskComponent>) {}
-
-  //global variables
-  allTasks: [] = [];
 
   addNewTask() {
     const task = this.AddTaskFormGroup.value;
