@@ -1,0 +1,82 @@
+<div class="mt-20">
+  <nav>
+    <ul class="space-y-4 mt-6">
+      <li>
+        <a
+          class="flex items-center space-x-2 p-6 hover:bg-gray-700 transition-colors cursor-pointer"
+          routerLink="dashboard"
+          (click)="drawer.close()"
+        >
+          <span class="material-symbols-rounded"> dashboard </span>
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          class="flex items-center space-x-2 p-6 hover:bg-gray-700 transition-colors cursor-pointer"
+          routerLink="backlogs"
+          (click)="drawer.close()"
+        >
+          <span class="material-symbols-rounded"> event_list </span>
+          <span>Backlogs</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          class="flex items-center space-x-2 p-6 hover:bg-gray-700 transition-colors cursor-pointer"
+          routerLink="tasks"
+          (click)="drawer.close()"
+        >
+          <span class="material-symbols-rounded"> assignment </span>
+          <span>To Do</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          class="flex items-center space-x-2 p-6 hover:bg-gray-700 transition-colors cursor-pointer"
+          routerLink="in-progress"
+          (click)="drawer.close()"
+        >
+          <span class="material-symbols-rounded"> pending_actions </span>
+          <span>In progress</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          class="flex items-center space-x-2 p-6 hover:bg-gray-700 transition-colors cursor-pointer"
+          routerLink="staging"
+          (click)="drawer.close()"
+        >
+          <span class="material-symbols-rounded"> grading </span>
+          <span>Staging</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          class="flex items-center space-x-2 p-6 hover:bg-gray-700 transition-colors cursor-pointer"
+          routerLink="completed"
+          (click)="drawer.close()"
+        >
+          <span class="material-symbols-rounded"> done_all </span>
+          <span>Completed</span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          class="flex items-center space-x-2 p-6 hover:bg-gray-700 transition-colors cursor-pointer"
+          routerLink="cancelled"
+          (click)="drawer.close()"
+        >
+          <span class="material-symbols-rounded"> remove_done </span>
+          <span>Cancelled</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

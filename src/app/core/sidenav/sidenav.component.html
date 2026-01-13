@@ -1,0 +1,36 @@
+<section class="">
+  <mat-drawer-container class="example-container" autosize>
+    <!-- sidenav -->
+    <mat-drawer
+      #drawer
+      mode="side"
+      class="example-sidenav bg-[#2e2e2e]! rounded-none! w-60! text-white! text-center! shadow-lg!"
+      mode="over"
+    >
+      <div class="text-xs bg-orange-500! p-3">
+        <span >Task Management Application</span>
+      </div>
+      <app-navigations [drawer]="drawer"></app-navigations>
+    </mat-drawer>
+
+    <!-- hamburger menu -->
+    <div class="example-sidenav-content p-3 flex justify-between items-center">
+      <div>
+        <p class="text-xl font-semibold tracking-widest p-4">TMA</p>
+      </div>
+      <button
+        type="button"
+        matButton
+        (click)="drawer.toggle()"
+        class="bg-[#155dfc] p-2 w-10 h-10 rounded-md shadow-md cursor-pointer text-white hover:bg-[#0d4ac1] transition"
+      >
+        <span class="material-symbols-rounded"> menu </span>
+      </button>
+    </div>
+
+    <!-- page contents -->
+    <section class=" fixed overflow-hidden w-full h-full p-6 bg-slate-200">
+      <router-outlet></router-outlet>
+    </section>
+  </mat-drawer-container>
+</section>
