@@ -1,12 +1,14 @@
-import { Component, SimpleChanges, ViewChild } from '@angular/core';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatSort, MatSortModule} from '@angular/material/sort';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { Component, inject, SimpleChanges, ViewChild } from '@angular/core';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { TaskData } from './models/task-data';
 import { CommonModule } from '@angular/common';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { AddTaskComponent } from './add-task/add-task.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,16 +19,29 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatPaginatorModule,
     MatSortModule,
     CommonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule,
   ],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+  styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent {
   /**
-   * table configuration
+   * dialog configs
    */
-  displayedColumns: string[] = ['id', 'description', 'priority', 'status', 'dueDate', 'edit'];
+  readonly dialog = inject(MatDialog);
+
+  /**
+   * table configs
+   */
+  displayedColumns: string[] = [
+    'id',
+    'description',
+    'priority',
+    'status',
+    'dueDate',
+    'edit',
+  ];
   dataSource: MatTableDataSource<TaskData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -35,28 +50,20 @@ export class DashboardComponent {
   /**
    * global variables
    */
-  allTasks : TaskData[] = [
-    {id : 1, description : 'Design login page', priority : 'high', status : 'backlog', dueDate : '13/01/2026'},
-    {id : 2, description : 'Design login page', priority : 'low', status : 'to do', dueDate : '30/01/2026'},
-    {id : 3, description : 'Design login page', priority : 'medium', status : 'in progress', dueDate : '14/02/2026'},
-    {id : 4, description : 'Design login page', priority : 'low', status : 'staging', dueDate : '18/05/2026'},
-    {id : 5, description : 'Design login page', priority : 'high', status : 'completed', dueDate : '30/08/2026'},
-    {id : 6, description : 'Design login page', priority : 'medium', status : 'cancelled', dueDate : '14/02/2024'},
-  ]
+  allTasks: TaskData[] = [];
+  backlogs: any[] = [];
+  todos: any[] = [];
+  inProgress: any[] = [];
+  stagings: any[] = [];
+  completed: any[] = [];
+  canceled: any[] = [];
 
-  backlogs : any[] = []
-  todos : any[] = []
-  inProgress : any[] = []
-  stagings : any[] = []
-  completed : any[] = []
-  canceled : any[] = []
-
-  constructor(){
+  constructor() {
     this.dataSource = new MatTableDataSource<TaskData>(this.allTasks);
   }
 
-  ngOnInit(){
-    this.getAllTasks();
+  ngOnInit() {
+    // this.getAllTasks();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -70,30 +77,22 @@ export class DashboardComponent {
     this.dataSource.sort = this.sort;
   }
 
-  getAllTasks(){
-    console.log(this.allTasks)
-
-    this.allTasks.filter((task:any) => {
-      if(task.status === 'backlog'){
-        this.backlogs.push(task)
-      }else if(task.status === 'to do'){
-        this.todos.push(task)
-      }else if(task.status === 'in progress'){
-        this.inProgress.push(task)
-      }
-      else if(task.status === 'staging'){
-        this.stagings.push(task)
-      }
-      else if(task.status === 'completed'){
-        this.completed.push(task)
-      }
-      else if(task.status === 'cancelled'){
-        this.canceled.push(task)
-      }
-    })
+  getAllTasks() {
     this.dataSource.data = this.allTasks;
   }
 
+  //open dialog to add tasks
+  openDialog() {
+    const dialogRef = this.dialog.open(AddTaskComponent);
+
+    //returns the data after the dialog is closed
+    dialogRef.afterClosed().subscribe((result) => {
+      this.allTasks.push(result);
+
+      //saving all tasks in localStorage
+      localStorage.setItem('tasks', JSON.stringify(this.allTasks));
+    });
+  }
 
   //search filter
   applyFilter(event: Event) {

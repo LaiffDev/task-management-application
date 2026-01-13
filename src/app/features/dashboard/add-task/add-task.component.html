@@ -1,0 +1,67 @@
+<div class="p-4">
+  <h2 class="text-xl font-medium p-4">Add a new task</h2>
+  <div class="p-4">
+    <form [formGroup]="AddTaskFormGroup">
+      <div class="flex space-x-8">
+        <mat-form-field class="w-full">
+          <mat-label>Id</mat-label>
+          <input matInput type="number" formControlName="id" />
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Due Date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dueDate" />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="flex space-x-8">
+        <mat-form-field class="w-full">
+          <mat-label>Priority</mat-label>
+          <mat-select formControlName="priority">
+            <mat-option value="low">low</mat-option>
+            <mat-option value="medium">medium</mat-option>
+            <mat-option value="high">high</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option value="backlog">backlog</mat-option>
+            <mat-option value="to-do">to do</mat-option>
+            <mat-option value="in-progress">in progress</mat-option>
+            <mat-option value="staging">staging</mat-option>
+            <mat-option value="completed">completed</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field class="w-full">
+          <mat-label>Task Description</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="flex space-x-4">
+        <button
+          class="cursor-pointer bg-[#155dfc] hover:bg-[#0d4ac1] transition-all shadow-md p-3 w-full text-white rounded-md"
+          (click)="addNewTask()"
+        >
+          Add task
+        </button>
+        <button
+          class="cursor-pointer bg-[#fc1515] hover:bg-[#c10d0d] transition-all shadow-md p-3 w-full text-white rounded-md"
+          (click)="closeDialog()"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
