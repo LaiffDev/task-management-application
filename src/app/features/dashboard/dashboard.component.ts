@@ -83,6 +83,12 @@ export class DashboardComponent {
   getAllTasks() {
     if (typeof localStorage !== 'undefined') {
       this.allTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+
+      this.backlogs = this.allTasks.filter((t) => t.status === 'backlog');
+      this.todos = this.allTasks.filter((t) => t.status === 'to do');
+      this.inProgress = this.allTasks.filter((t) => t.status === 'in progress');
+      this.stagings = this.allTasks.filter((t) => t.status === 'staging');
+      this.completed = this.allTasks.filter((t) => t.status === 'completed');
     }
 
     this.dataSource.data = this.allTasks;
@@ -94,12 +100,22 @@ export class DashboardComponent {
 
     //returns the data after the dialog is closed
     dialogRef.afterClosed().subscribe((result) => {
+      if (!result) return;
+
       this.savedTasks.push(result);
       this.taskService.AddNewTask(this.savedTasks);
 
       //recalling the function when a task is added
       this.getAllTasks();
     });
+  }
+
+  //deletion of a specific task
+  deleteTask(task: TaskData) {
+    this.allTasks = this.allTasks.filter((t) => t.id !== task.id);
+    localStorage.setItem('tasks', JSON.stringify(this.allTasks));
+
+    this.getAllTasks();
   }
 
   //search filter
